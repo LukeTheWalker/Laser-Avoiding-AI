@@ -13,7 +13,8 @@ class Board {
 				if (document.getElementById("grid" + i + "slot" + String(x + y*columns)) == null)
 					console.log(("grid" + i + "slot" + String(x + y*columns)))
 				*/
-				document.getElementById("grid" + i + "slot" + String(x + y*columns)).style.backgroundColor = "red";    
+//				document.getElementById("grid" + i + "slot" + String(x + y*columns)).style.backgroundColor = "red";    
+				document.getElementById("grid" + i + "slot" + String(x + y*columns)).classList.add("laser");    
 			}
 		})
 	}
@@ -51,7 +52,10 @@ class Board {
 }
 
 function clearGrid(){
-    var cells = document.getElementsByClassName("grid-item");
-    for (var i = 0; i < cells.length; i++)
-        cells[i].style.backgroundColor = "white";    
+    var lasers = document.getElementsByClassName("laser");
+	var birds = document.getElementsByClassName("bird");
+//    for (var i = 0; i < cells.length; i++)
+        //cells[i].style.backgroundColor = "white";    
+    while (lasers.length) lasers[0].classList.remove("laser")
+    while (birds.length) birds[0].classList.remove("bird")
 }

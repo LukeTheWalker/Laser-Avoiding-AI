@@ -1,9 +1,4 @@
-function getNodeColor (net, i) {
-	if (i < net.input_size)
-		return "blue"
-	if (i > net.nodes.length - net.output_size)
-		return "red"
-	return "yellow"
+function getNodeColor (net) {
 /*	if (node.type == "hidden")
 		return "yellow"
 	if (node.type == "output")
@@ -11,8 +6,14 @@ function getNodeColor (net, i) {
 	if (node.type == "input")
 		return "blue"*/
 }
-
-function generateGraph (a){
+function weightColor (weight) {
+	if (weight == 1)
+		return "white"
+	if (weight > 0)
+		return "green"
+	return "red"
+}
+async function generateGraph (a){
 	let nodes_vis = []
 	let edges_vis = []
 	let net = a.toJSON()
@@ -22,6 +23,7 @@ function generateGraph (a){
 			nodes_vis.push({
 				id: net.input_nodes[i],
 				label: "",
+				level: 0,
 				color: {background: "blue"},
 			})
 	}
@@ -30,6 +32,7 @@ function generateGraph (a){
 			nodes_vis.push({
 				id: net.output_nodes[i],
 				label: "",
+				level: 2,
 				color: {background: "red"},
 			})
 	}
@@ -38,6 +41,7 @@ function generateGraph (a){
 				nodes_vis.push({
 				id: i,
 				label: "",
+				level: 1,
 				color: {background: "yellow"},
 			})
 	}
@@ -46,7 +50,7 @@ function generateGraph (a){
 		edges_vis.push({
 			from: net.connections[i].from,
 			to:   net.connections[i].to,
-			color: (net.connections[i].weight == 1) ? "white" : ((net.connections[i].weight > 0) ? "green" : "red")
+			color: weightColor (net.connections[i].weight)
 
 		})
 	}
@@ -69,7 +73,8 @@ function generateGraph (a){
          layout: {
            hierarchical: {
              direction: "LR",
-             sortMethod: "directed"
+             sortMethod: "directed",
+			 levelSeparation: 200
            }
          },
          physics: false
@@ -77,3 +82,15 @@ function generateGraph (a){
 	   var network = new vis.Network(container, data, options);
 	return 0 
 }
+async function updatePlot (data){
+	Plotly.extendTraces("plotter", {
+			x: [[data[0]]],
+			y: [[data[1]]]
+		}, [0])
+}
+let plotter = document.getElementById("plotter")
+Plotly.plot(plotter, [{
+		x: [0],
+		y: [0],
+		type: 'scatter'
+	}])

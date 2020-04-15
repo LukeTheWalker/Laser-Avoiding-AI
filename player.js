@@ -27,8 +27,8 @@ let Player = function (brain) {
 			return 2
 		else if (i == 1)
 			return 3
-		//else if (i == 2)
-		//	return 4
+		else if (i == 2)
+			return 4
 		return;
 	}
 	this.move = function (output){ 
@@ -70,7 +70,8 @@ let Player = function (brain) {
 		this.alive = true
 	}
 	this.draw = function (i){
-		document.getElementById("grid" + i + "slot" + String(this.y*columns+this.x)).style.backgroundColor = "blue";    
+		//document.getElementById("grid" + i + "slot" + String(this.y*columns+this.x)).style.backgroundColor = "blue";    
+		document.getElementById("grid" + i + "slot" + String(this.y*columns+this.x)).classList.add("bird");    
 	}
 	return this;
 }
