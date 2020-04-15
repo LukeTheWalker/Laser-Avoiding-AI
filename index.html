@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<html>
+    <head>
+		<script src="carrot.js"></script>
+		<script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+        <style>
+			#mynetwork {
+				width: 600px;
+				height: 650px;
+				border: 1px solid lightgray;
+				float: right;
+			}
+
+            .grid-container {
+                width: auto;
+                float: left;
+                display: grid;
+                grid-template-columns: repeat(10, 25px);
+				padding: 5px 5px 5px 5px
+            }
+            .grid-item {
+                height: 23px;
+                width: 23px;
+                border: 1px solid rgba(0, 0, 0, 0.8);
+                font-size: 30px;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body onload="fitness()">
+		<button onclick="speed = (speed == 200 ? 10 : 200); show = !show">SLOW</button>
+		<button onclick="generateGraph(activePlayers[0].brain)">BEST</button>
+		<div class="network" id="mynetwork" ></div>
+        <script src="settings.js"></script>
+        <script src="player.js"></script>
+		<script src="board.js"></script>
+        <script src="visualization.js"></script>
+        <script src="neatAI_2.js"></script>
+</body>
+</html>
