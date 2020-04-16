@@ -1,4 +1,4 @@
-var columns = 7;
+var columns = 5;
 var speed = 200
 var show = true
 function writeGrids (games) {

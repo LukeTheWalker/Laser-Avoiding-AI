@@ -8,7 +8,7 @@ function getNodeColor (net) {
 }
 function weightColor (weight) {
 	if (weight == 1)
-		return "white"
+		return "black"
 	if (weight > 0)
 		return "green"
 	return "red"
@@ -82,12 +82,14 @@ async function generateGraph (a){
 	   var network = new vis.Network(container, data, options);
 	return 0 
 }
-async function updatePlot (data){
+function updatePlot (){
+	debugger
 	Plotly.extendTraces("plotter", {
 			x: [[data[0]]],
 			y: [[data[1]]]
 		}, [0])
 }
+
 let plotter = document.getElementById("plotter")
 Plotly.plot(plotter, [{
 		x: [0],
