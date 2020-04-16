@@ -82,14 +82,12 @@ async function generateGraph (a){
 	   var network = new vis.Network(container, data, options);
 	return 0 
 }
-function updatePlot (){
-	debugger
+async function updatePlot (data){
 	Plotly.extendTraces("plotter", {
 			x: [[data[0]]],
 			y: [[data[1]]]
-		}, [0])
+		}, [0]);
 }
-
 let plotter = document.getElementById("plotter")
 Plotly.plot(plotter, [{
 		x: [0],

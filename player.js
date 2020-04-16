@@ -70,7 +70,6 @@ let Player = function (brain) {
 		this.alive = true
 	}
 	this.draw = function (i){
-		//document.getElementById("grid" + i + "slot" + String(this.y*columns+this.x)).style.backgroundColor = "blue";    
 		document.getElementById("grid" + i + "slot" + String(this.y*columns+this.x)).classList.add("bird");    
 	}
 	return this;

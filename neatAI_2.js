@@ -25,7 +25,7 @@ neat.generation = 1
 let board = new Board(columns)
 
 let activePlayers = populate(neat.population)
-let dead = []
+let dead = 0
 let cnt = 0
 
 let bests = []
@@ -38,47 +38,35 @@ async function partita () {
 	//uccide i player
 	clearGrid()
 	board.advanceLaser()
-	activePlayers = activePlayers.filter(player => {
-		player.move(player.brain.activate( [player.y,...board.laser] ))
-		if (player.isDead()){
-			dead.push(player.brain)
-			return false
-		}
-		else {
-			player.brain.score++
-			return true
+	activePlayers.forEach (player => {
+		if (player.alive){
+			player.move(player.brain.activate( [player.y,...board.laser] ))
+			if (!player.isDead())
+				player.brain.score++
+			else 
+				dead++
 		}
 	})
-
 	if (cnt % board.round == 0) board.createLaser ()
-	cnt++	
+	cnt++
+	
 	if (show){
 		board.draw(0)
-		for (let i = 0; i < activePlayers.length; i++) if (activePlayers[i]) activePlayers[i].draw(0)
+		for (let i = 0; i < activePlayers.length; i++) if (activePlayers[i].alive) activePlayers[i].draw(0)
 	}
-	if (activePlayers.length == 0){
-		neat.population = dead
-		if(settings.population_size !== neat.population.length) 
-			console.error("In fact, he was right: uncorrespponding population_size(s) \n" + settings.population_size + " ------- vs -------- " + neat.population.length)
-		
+	
+	if (dead == neat.population.length){
+		neat.sort()
 		const total = neat.population.reduce((sum, brain) => sum + brain.score, 0)
     	const average = total / neat.population.length
-		neat.sort()
+		const best = neat.population[0]
 		genLabel.innerHTML = ("-------------- Gen " + neat.generation + " -------------")
 		//averageLabel.innerHTML = (neat.getAverage())
-		bestLabel.innerHTML = (neat.population[0].score)
-		/*Plotly.extendTraces("plotter", {
-			x: [[neat.generation]],
-			y: [[neat.population[0].score]]
-		}, [0])*/
-		//updatePlot ()
-		neat.elitism = Number(settings.elitism) // Avoid implicit type coercion, adjust elitism before evolve
-  		//for (let i = 0; i < neat.population.length; i++)neat.population[i].score = Number(neat.population[i].score)
-		//for (let i = 0; i < neat.population.length; i++)console.log(neat.population[i].score)
-		//console.log(await neat.evolve())
-		//generateGraph(neat.population[0])
+		bestLabel.innerHTML = (best.score)
+		generateGraph (neat.population[0])
+		updatePlot([neat.generation, best.score])
 		activePlayers = populate(await neat.evolve())
-		dead = []
+		dead = 0
 		cnt = 0
 		document.getElementById("grid" + 0).remove()
 		fitness()
