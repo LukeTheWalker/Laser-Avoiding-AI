@@ -27,8 +27,8 @@ let Player = function (brain) {
 			return 2
 		else if (i == 1)
 			return 3
-		else if (i == 2)
-			return 4
+		//else if (i == 2)
+		//	return 4
 		return;
 	}
 	this.move = function (output){ 

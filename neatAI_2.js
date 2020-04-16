@@ -8,7 +8,7 @@ const settings = {
 	elitism: 5
 }
 
-let neat = new Neat (1+columns, 3, {
+let neat = new Neat (1+columns, 2, {
 	population_size:	settings.population_size,
 	elitism: 			settings.elitism,
 	mutation: 			settings.mutation_methods,
@@ -67,16 +67,16 @@ async function partita () {
 		genLabel.innerHTML = ("-------------- Gen " + neat.generation + " -------------")
 		//averageLabel.innerHTML = (neat.getAverage())
 		bestLabel.innerHTML = (neat.population[0].score)
-		Plotly.extendTraces("plotter", {
+		/*Plotly.extendTraces("plotter", {
 			x: [[neat.generation]],
 			y: [[neat.population[0].score]]
-		}, [0])
+		}, [0])*/
 		//updatePlot ()
 		neat.elitism = Number(settings.elitism) // Avoid implicit type coercion, adjust elitism before evolve
   		//for (let i = 0; i < neat.population.length; i++)neat.population[i].score = Number(neat.population[i].score)
 		//for (let i = 0; i < neat.population.length; i++)console.log(neat.population[i].score)
 		//console.log(await neat.evolve())
-		generateGraph(neat.population[0])
+		//generateGraph(neat.population[0])
 		activePlayers = populate(await neat.evolve())
 		dead = []
 		cnt = 0
